@@ -228,4 +228,169 @@ function createJobCard(job) {
   </article>
 `;   }
 
+// Render jobs
+function renderJobs() {
+
+  const filteredJobs = activeFilter === "all"
+    ? jobs
+    : jobs.filter(
+        job => job.status === activeFilter
+      );
+
+
+  // Update visible count
+  document.getElementById("visible-count").textContent =
+    filteredJobs.length;
+
+
+  // Empty state
+  if (filteredJobs.length === 0) {
+
+    const message = activeFilter === "interview"
+      ? "No interview applications yet"
+      : activeFilter === "rejected"
+      ? "No rejected applications"
+      : "No jobs available";
+
+
+    const subtitle = activeFilter === "interview"
+      ? "Jobs you move to Interview will appear here."
+      : activeFilter === "rejected"
+      ? "Applications marked Rejected will appear here."
+      : "Your job opportunities will appear here.";
+
+
+    jobsList.innerHTML = `
+      <div class="empty-state text-center py-16 px-4">
+
+        <div class="empty-icon text-4xl mb-4">
+          📄
+        </div>
+
+        <h3 class="text-lg font-bold text-slate-700">
+          ${message}
+        </h3>
+
+        <p class="text-sm text-slate-500 mt-2">
+          ${subtitle}
+        </p>
+
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  // job cards
+  jobsList.innerHTML = filteredJobs
+    .map(createJobCard)
+    .join("");
+
+}
+
+//  filter
+function setFilter(filter) {
+
+  activeFilter = filter;
+
+
+  document.querySelectorAll("[data-filter]").forEach(tab => {
+
+    const isActive = tab.dataset.filter === filter;
+
+    tab.classList.toggle("tab-active", isActive);
+
+    tab.setAttribute(
+      "aria-selected",
+      String(isActive)
+    );
+
+  });
+
+
+  renderJobs();
+
+}
+
+
+// Tab event listener
+// Tab Event Listener
+document.querySelector(".job-tabs").addEventListener("click", event => {
+
+      const tab = event.target.closest("[data-filter]");
+
+  if (tab) {
+    setFilter(tab.dataset.filter);
+  }
+
+});
+
+
+// Event delegation for job cards
+jobsList.addEventListener("click", event => {
+
+  const button = event.target.closest("[data-action]");
+
+  if (!button) 
+    return;
+
+
+  const card = button.closest("[data-job-id]");
+
+  if (!card)
+     return;
+
+
+  const jobId = Number(card.dataset.jobId);
+
+
+  const jobIndex = jobs.findIndex(
+    job => job.id === jobId
+  );
+
+  if (jobIndex === -1) return;
+
+
+  const action = button.dataset.action;
+
+
+  // Delete job
+  if (action === "delete") {
+
+    jobs.splice(jobIndex, 1);
+
+  }
+
+
+  //interview r rejected
+  else if (
+    action === "interview" ||
+    action === "rejected"
+  ) {
+
+    if (jobs[jobIndex].status === action) {
+
+      jobs[jobIndex].status = "not-applied";
+
+    } else {
+
+      jobs[jobIndex].status = action;
+
+    }
+
+  }
+
+  updateDashboard();
+
+  renderJobs();
+
+});
+
+
+
+updateDashboard();
+
+renderJobs();
 
