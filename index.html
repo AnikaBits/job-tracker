@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Job Application Tracker</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- DaisyUI -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/daisyui@4.12.24/dist/full.min.css"
+    rel="stylesheet"
+  >
+
+</head>
+
+<body class="bg-slate-100 min-h-screen">
+
+
+  <main class="max-w-6xl mx-auto px-4 py-8">
+
+    <section class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 md:p-7">
+
+      <div class="mb-6">
+        <h1 class="text-2xl md:text-3xl font-bold text-blue-950">
+          Job Application Tracker
+        </h1>
+
+        <p class="text-sm text-slate-500 mt-2">
+          Keep track of every opportunity in one place.
+        </p>
+
+      </div>
+
+
+     
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+
+        <!-- Total -->
+        <div class="stat bg-white border border-slate-200 rounded-xl shadow-sm">
+
+          <div class="stat-title text-slate-500">
+            Total Applications
+          </div>
+
+          <div class="stat-value text-blue-800" id="total-count">
+            8
+          </div>
+        </div>
+
+
+        <!-- interview -->
+        <div class="stat bg-white border border-slate-200 rounded-xl shadow-sm">
+
+          <div class="stat-title text-slate-500">
+            Interview
+          </div>
+
+          <div class="stat-value text-green-500" id="interview-count">
+            0
+          </div>
+
+        </div>
+<!-- rejected -->
+        <div class="stat bg-white border border-slate-200 rounded-xl shadow-sm">
+
+          <div class="stat-title text-slate-500">
+            Rejected
+          </div>
+
+          <div class="stat-value text-red-500" id="rejected-count">
+            0
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- Available Jobs Section -->
+    <section class="bg-white rounded-xl shadow-sm border border-slate-200 mt-6 overflow-hidden">
+
+      <!-- Section Heading -->
+      <div class="flex justify-between items-center p-5 md:p-6">
+
+        <div>
+
+          <p class="text-xs font-bold tracking-widest text-slate-400 mb-2">
+            OPPORTUNITIES
+          </p>
+
+          <h2 class="text-xl font-bold text-blue-950">
+            Available Jobs
+          </h2>
+
+        </div>
+
+        <p class="text-sm text-slate-500">
+          <span id="visible-count">8</span> jobs
+        </p>
+
+      </div>
+
+
+      <!-- Tabs -->
+      <div class="px-5 md:px-6 pb-4 border-b border-slate-100">
+
+       <div class="job-tabs tabs tabs-boxed bg-slate-100 inline-flex">
+
+          <button
+            class="tab tab-active"
+            data-filter="all"
+            type="button"
+            aria-selected="true">
+
+            All
+
+            <span class="ml-2 text-xs" id="all-tab-count">
+              8
+            </span>
+
+          </button>
+
+
+          <button
+            class="tab"
+            data-filter="interview"
+            type="button"
+            aria-selected="false">
+
+            Interview
+
+            <span class="ml-2 text-xs" id="interview-tab-count">
+              0
+            </span>
+
+          </button>
+
+
+          <button
+            class="tab"
+            data-filter="rejected"
+            type="button"
+            aria-selected="false">
+
+            Rejected
+
+            <span class="ml-2 text-xs" id="rejected-tab-count">
+              0
+            </span>
+
+          </button>
+
+        </div>
+
+      </div>
+
+
+<!-- job card -->
+      <div
+        id="jobs-list"
+        class="min-h-64"
+        aria-live="polite">
+      </div>
+
+    </section>
+
+
+    
+
+  </main>
+
+
+  <!-- JavaScript -->
+  <script src="script.js"></script>
+
+</body>
+</html>
